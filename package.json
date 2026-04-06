@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "test": "bun test",
-    "typecheck": "tsc"
+    "typecheck": "bunx tsc"
   },
   "exports": {
     ".": "./index.ts",

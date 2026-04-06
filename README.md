@@ -19,12 +19,6 @@ This plugin solves that by letting you write root-relative links like `/referenc
 bun add starlight-base-path
 ```
 
-Or link it locally if it lives alongside your docs:
-
-```bash
-bun add ./starlight-base-path
-```
-
 ### Configure
 
 Add the plugin to your `astro.config.mjs`:
