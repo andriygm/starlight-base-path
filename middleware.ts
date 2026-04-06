@@ -1,7 +1,7 @@
 import { defineRouteMiddleware } from "@astrojs/starlight/route-data";
-import type { StarlightRouteData } from "@astrojs/starlight/route-data";
+import type { RouteMiddlewareHandler, StarlightRouteData } from "@astrojs/starlight/route-data";
 
-export const onRequest = defineRouteMiddleware((context, next) => {
+export const onRequest: RouteMiddlewareHandler = defineRouteMiddleware((context, next) => {
   const route = (context.locals as any).starlightRoute as StarlightRouteData;
   const base = (import.meta.env.BASE_URL ?? "/").replace(/\/$/, "");
 
