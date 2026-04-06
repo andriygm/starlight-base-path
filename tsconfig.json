@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["bun"]
+  },
+  // TODO: Starlight ships .ts source (not .d.ts) that references Astro virtual
+  // modules. Any file importing from @astrojs/starlight pulls in that broken
+  // chain, and skipLibCheck only covers .d.ts. So we can only typecheck files
+  // that don't touch Starlight (index.ts, middleware.ts are excluded).
+  // Revisit if Starlight starts shipping compiled .d.ts declarations.
+  "include": ["remark.ts", "tests/remark.test.ts"]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "starlight-base-path",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "test": "bun test",
+    "typecheck": "tsc"
+  },
+  "exports": {
+    ".": "./index.ts",
+    "./middleware": "./middleware.ts"
+  },
+  "peerDependencies": {
+    "@astrojs/starlight": ">=0.38.0",
+    "astro": ">=6.0.0"
+  },
+  "dependencies": {
+    "unist-util-visit": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.11"
+  }
+}
