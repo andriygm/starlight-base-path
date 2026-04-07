@@ -7,17 +7,17 @@ import { visit } from "unist-util-visit";
  * This allows content authors to write links like `/reference/cli/remote`
  * without hardcoding the base path (e.g. `/docs/`).
  */
-export const remarkBasePath: Plugin<[], Root> = () => {
-  const base = normalizeBase(process.env.ASTRO_BASE || "/");
+export function remarkBasePath(base: string = "/"): Plugin<[], Root> {
+  const normalizedBase = normalizeBase(base);
 
-  return (tree) => {
+  return () => (tree) => {
     visit(tree, "link", (node) => {
       if (node.url.startsWith("/")) {
-        node.url = base + node.url.slice(1);
+        node.url = normalizedBase + node.url.slice(1);
       }
     });
   };
-};
+}
 
 function normalizeBase(base: string): string {
   if (!base.startsWith("/")) base = `/${base}`;

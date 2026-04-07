@@ -14,10 +14,10 @@ export function starlightBasePath(): StarlightPlugin {
         addIntegration({
           name: "starlight-base-path-remark",
           hooks: {
-            "astro:config:setup": ({ updateConfig }) => {
+            "astro:config:setup": ({ config, updateConfig }) => {
               updateConfig({
                 markdown: {
-                  remarkPlugins: [remarkBasePath],
+                  remarkPlugins: [remarkBasePath(config.base)],
                 },
               });
             },

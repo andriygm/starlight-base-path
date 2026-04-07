@@ -27,7 +27,7 @@ Add the plugin to your `astro.config.mjs`:
 import { starlightBasePath } from "starlight-base-path";
 
 export default defineConfig({
-  base: process.env.ASTRO_BASE || "/",
+  base: "/docs",
 
   integrations: [
     starlight({
@@ -36,6 +36,8 @@ export default defineConfig({
   ],
 });
 ```
+
+The plugin reads the `base` path directly from your Astro config — no environment variables needed.
 
 ### Write links without the base path
 
@@ -54,7 +56,7 @@ hero:
       link: /guides/getting-started
 ```
 
-The plugin will prepend the base path automatically. With `ASTRO_BASE=/docs/`, the above links resolve to `/docs/reference/cli/remote` and `/docs/guides/getting-started` respectively. With no `ASTRO_BASE` (or `/`), they stay as-is.
+The plugin will prepend the base path automatically. With `base: "/docs"`, the above links resolve to `/docs/reference/cli/remote` and `/docs/guides/getting-started` respectively. With the default base (`/`), they stay as-is.
 
 ## Compatibility
 
