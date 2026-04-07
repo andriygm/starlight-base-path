@@ -1,6 +1,9 @@
 {
   "name": "starlight-base-path",
   "version": "0.1.1",
+  "repository": {
+    "url": "https://github.com/andriygm/starlight-base-path"
+  },
   "type": "module",
   "exports": {
     ".": "./index.ts",
