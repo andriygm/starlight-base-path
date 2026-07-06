@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
+import starlightLinksValidator from "starlight-links-validator";
 import { starlightBasePath } from "starlight-base-path";
 
 // https://astro.build/config
@@ -20,10 +21,10 @@ export default defineConfig({
         },
         {
           label: "Reference",
-          autogenerate: { directory: "reference" },
+          items: [{ autogenerate: { directory: "reference" } }],
         },
       ],
-      plugins: [starlightBasePath()],
+      plugins: [starlightBasePath(), starlightLinksValidator()],
     }),
   ],
 });
