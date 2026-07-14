@@ -19,29 +19,21 @@ describe("remark plugin – default base path", () => {
   });
 
   test("external links are unchanged", () => {
-    expect(getLinkUrls("[ext](https://example.com)")).toEqual([
-      "https://example.com",
-    ]);
+    expect(getLinkUrls("[ext](https://example.com)")).toEqual(["https://example.com"]);
   });
 });
 
 describe("remark plugin – custom base path", () => {
   test("root-relative links get the base prepended", () => {
-    expect(getLinkUrls("[page](/reference/cli)", "/docs/")).toEqual([
-      "/docs/reference/cli",
-    ]);
+    expect(getLinkUrls("[page](/reference/cli)", "/docs/")).toEqual(["/docs/reference/cli"]);
   });
 
   test("base without trailing slash is normalised", () => {
-    expect(getLinkUrls("[page](/reference/cli)", "/docs")).toEqual([
-      "/docs/reference/cli",
-    ]);
+    expect(getLinkUrls("[page](/reference/cli)", "/docs")).toEqual(["/docs/reference/cli"]);
   });
 
   test("external links are not modified", () => {
-    expect(getLinkUrls("[ext](https://example.com)", "/docs/")).toEqual([
-      "https://example.com",
-    ]);
+    expect(getLinkUrls("[ext](https://example.com)", "/docs/")).toEqual(["https://example.com"]);
   });
 
   test("relative links are not modified", () => {

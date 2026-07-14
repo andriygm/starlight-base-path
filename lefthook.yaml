@@ -1,7 +1,15 @@
 # Refer to https://lefthook.dev/configuration/ for the full config reference.
 
 pre-commit:
+  parallel: true
   jobs:
+    - name: format
+      glob: "*.{ts,tsx,js,jsx,mjs,cjs,json,md,mdx}"
+      run: bunx oxfmt {staged_files}
+      stage_fixed: true
+    - name: lint
+      glob: "*.{ts,tsx,js,jsx,mjs,cjs}"
+      run: bunx oxlint {staged_files}
     - name: typecheck
       run: bun run typecheck
 
@@ -12,3 +20,7 @@ pre-push:
       run: bun test
     - name: typecheck
       run: bun run typecheck
+    - name: lint
+      run: bun run lint
+    - name: format
+      run: bun run format:check

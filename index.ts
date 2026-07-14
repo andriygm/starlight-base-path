@@ -9,7 +9,10 @@ import { satteriBasePath } from "./satteri.ts";
 // route it through its runner, which is already torn down by the time this
 // plugin's async `astro:config:setup` hook runs (a plain `import()` there throws
 // "Vite module runner has been closed").
-const nativeImport: (url: string) => Promise<any> = new Function("url", "return import(url)") as any;
+const nativeImport: (url: string) => Promise<any> = new Function(
+  "url",
+  "return import(url)",
+) as any;
 
 /**
  * Load the `@astrojs/markdown-remark` that the consumer's Astro actually uses,

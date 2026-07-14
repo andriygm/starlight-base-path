@@ -12,7 +12,11 @@
   "scripts": {
     "prepare": "lefthook install",
     "test": "bun test",
-    "typecheck": "bunx tsc"
+    "typecheck": "bunx tsc",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check"
   },
   "dependencies": {
     "unist-util-visit": "^5.0.0"
@@ -21,6 +25,8 @@
     "@types/bun": "^1.3.14",
     "@types/mdast": "^4.0.4",
     "lefthook": "^2.1.10",
+    "oxfmt": "^0.59.0",
+    "oxlint": "^1.74.0",
     "remark-parse": "^11.0.0",
     "unified": "^11.0.5"
   },
