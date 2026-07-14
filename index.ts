@@ -2,6 +2,7 @@ import type { StarlightPlugin } from "@astrojs/starlight/types";
 import { createRequire } from "node:module";
 import { pathToFileURL } from "node:url";
 import { remarkBasePath } from "./remark.ts";
+import { satteriBasePath } from "./satteri.ts";
 
 // A native dynamic import that Astro's config-time Vite module runner won't
 // rewrite. Built via `Function` so Vite can't statically see the `import()` and
@@ -45,7 +46,7 @@ export function starlightBasePath(): StarlightPlugin {
         addIntegration({
           name: "starlight-base-path-remark",
           hooks: {
-            "astro:config:setup": async ({ config, updateConfig }) => {
+            "astro:config:setup": async ({ config, updateConfig, logger }) => {
               const remarkPlugin = remarkBasePath(config.base);
 
               // Astro >=7 renders Markdown through a pluggable `markdown.processor`
@@ -64,13 +65,38 @@ export function starlightBasePath(): StarlightPlugin {
                 return;
               }
 
-              const existingProcessor = (config.markdown as any).processor;
-              if (existingProcessor && markdownRemark.isUnifiedProcessor(existingProcessor)) {
-                existingProcessor.options.remarkPlugins.push(remarkPlugin);
-                updateConfig({ markdown: { processor: existingProcessor } as any });
+              // Augment whichever processor is configured *in place* rather than
+              // replacing it: other integrations (e.g. Starlight's asides) register
+              // their transforms on the same processor object, and swapping in a
+              // fresh one would silently drop them.
+              const processor = (config.markdown as any).processor;
+
+              if (processor && markdownRemark.isUnifiedProcessor(processor)) {
+                processor.options.remarkPlugins.push(remarkPlugin);
+                updateConfig({ markdown: { processor } as any });
                 return;
               }
 
+              // `satteri` is Astro 7's default processor; `name` is its public
+              // contract (`isSatteriProcessor` is just this check). Its plugins
+              // operate on mdast via a visitor context, so use the mdast variant.
+              if (processor?.name === "satteri") {
+                processor.options.mdastPlugins.push(satteriBasePath(config.base));
+                updateConfig({ markdown: { processor } as any });
+                return;
+              }
+
+              if (processor) {
+                logger.warn(
+                  `Unsupported \`markdown.processor\` ("${processor.name}"): the base path ` +
+                    "won't be applied to root-relative Markdown links. Use the default " +
+                    "`satteri()` processor or `unified()` from `@astrojs/markdown-remark`.",
+                );
+                return;
+              }
+
+              // No processor configured (e.g. plain Astro 7 without Starlight):
+              // install a Unified one carrying our plugin.
               updateConfig({
                 markdown: {
                   processor: markdownRemark.unified({ remarkPlugins: [remarkPlugin] }),
