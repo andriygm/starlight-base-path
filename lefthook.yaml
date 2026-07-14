@@ -1,0 +1,14 @@
+# Refer to https://lefthook.dev/configuration/ for the full config reference.
+
+pre-commit:
+  jobs:
+    - name: typecheck
+      run: bun run typecheck
+
+pre-push:
+  parallel: true
+  jobs:
+    - name: test
+      run: bun test
+    - name: typecheck
+      run: bun run typecheck
