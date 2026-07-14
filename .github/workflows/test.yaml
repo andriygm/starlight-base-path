@@ -8,34 +8,62 @@ on:
   workflow_call:
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Lint
+        run: bun run lint
+
+      - name: Check formatting
+        run: bun run format:check
+
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - name: Checkout
+        uses: actions/checkout@v7
 
-      - uses: oven-sh/setup-bun@v2
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
 
-      - run: bun install
+      - name: Install dependencies
+        run: bun install
 
-      - run: bun test
+      - name: Test
+        run: bun test
 
-      - run: bun run typecheck
+      - name: Typecheck
+        run: bun run typecheck
 
   example:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - name: Checkout
+        uses: actions/checkout@v7
 
-      - uses: oven-sh/setup-bun@v2
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
 
-      - run: bun install
+      - name: Install dependencies
+        run: bun install
 
       # Build the example against the latest Astro/Starlight. It enables
       # starlight-links-validator, so the build fails if the base path stops
       # being applied to content or frontmatter links — the regression that
       # motivated this plugin's Astro 7 support.
-      - run: bun install
+      - name: Install example dependencies
+        run: bun install
         working-directory: examples/simple
 
-      - run: bun run build
+      - name: Build example
+        run: bun run build
         working-directory: examples/simple
