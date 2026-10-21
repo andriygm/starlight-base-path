@@ -22,11 +22,11 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "@types/bun": "^1.4.2",
+    "@types/bun": "^1.4.3",
     "@types/mdast": "^4.0.4",
-    "lefthook": "^2.1.16",
-    "oxfmt": "^0.71.0",
-    "oxlint": "^1.86.0",
+    "lefthook": "^2.2.2",
+    "oxfmt": "^0.73.0",
+    "oxlint": "^1.88.0",
     "remark-parse": "^11.0.0",
     "unified": "^11.0.5"
   },
